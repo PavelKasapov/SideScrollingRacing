@@ -3,10 +3,10 @@ using Zenject;
 
 public class GameInstaller : MonoInstaller
 {
-    public RoadPool roadPool;
+    public RoadManager roadPool;
     public override void InstallBindings()
     {
-        Container.Bind<RoadPool>().FromInstance(roadPool).AsSingle();
-        Container.Bind<RoadPartFactory>().AsSingle();
+        Container.Bind<RoadManager>().FromInstance(roadPool).AsSingle();
+        Container.Bind<RoadShapeFactory>().AsSingle();
     }
 }
