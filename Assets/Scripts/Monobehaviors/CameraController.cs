@@ -4,13 +4,13 @@ using Zenject;
 
 public class CameraController : MonoBehaviour
 {
-    private CarController _car;
+    private VehicleController _vehicle;
     private Coroutine _folowCarRoutine;
 
     [Inject]
-    public void Construct(CarController car)
+    public void Construct(VehicleController vehicle)
     {
-        _car = car;
+        _vehicle = vehicle;
         if (_folowCarRoutine == null)
         {
             _folowCarRoutine = StartCoroutine(FollowCar());
@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
     IEnumerator FollowCar()
     {
         while (true){
-            transform.position = new Vector3(_car.transform.position.x + 10f, transform.position.y, -10);
+            transform.position = new Vector3(_vehicle.transform.position.x + 10f, transform.position.y, -10);
             yield return null;
         }
     }

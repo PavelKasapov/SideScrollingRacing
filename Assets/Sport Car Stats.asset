@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98632ecf48e10944ca2c5f92bd7fbf9f, type: 3}
+  m_Name: Sport Car Stats
+  m_EditorClassIdentifier: 
+  vehicleName: Sport Car
+  maxSpeedFront: 0
+  maxTorqueFront: 0
+  maxTorqueBreakFront: 100
+  maxSpeedBack: 2500
+  maxTorqueBack: 10000
+  maxTorqueBreakBack: 100
