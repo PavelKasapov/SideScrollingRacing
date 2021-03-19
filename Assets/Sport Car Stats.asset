@@ -15,7 +15,7 @@ MonoBehaviour:
   vehicleName: Sport Car
   maxSpeedFront: 0
   maxTorqueFront: 0
-  maxTorqueBreakFront: 100
+  maxTorqueBreakFront: 10
   maxSpeedBack: 2500
   maxTorqueBack: 10000
-  maxTorqueBreakBack: 100
+  maxTorqueBreakBack: 10

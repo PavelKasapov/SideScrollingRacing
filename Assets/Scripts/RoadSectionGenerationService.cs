@@ -2,7 +2,10 @@
 
 public class RoadSectionGenerationService
 {
+    private const float minYAxis = 1f;
+    private const float maxYAxis = 10f;
     private Vector3 prevEndPoint = new Vector3(-2f, 2f);
+    private float prevYAxis = 2f;
     public RoadSection GenerateSecton(int sectionIndex)
     {
         Vector3[] points = new Vector3[16];
@@ -13,16 +16,17 @@ public class RoadSectionGenerationService
         }
         prevEndPoint = points[15];
 
-        RoadSection newSection = new RoadSection(sectionIndex, points);
-        return newSection;
+        return new RoadSection(sectionIndex, points);
     }
 
     private Vector3 GeneratePoint(int i)
     {
         float pointXAxis = Mathf.Lerp(-2f, 2f, (float)i/ 15);
-        float pointYAxis = Random.Range(1f, 2f);
-        Vector3 point = new Vector3(pointXAxis, pointYAxis);
+        float pointYAxis = Random.Range(prevYAxis - 1f, prevYAxis + 1f);
+        pointYAxis = pointYAxis > maxYAxis ? maxYAxis : pointYAxis;
+        pointYAxis = pointYAxis < minYAxis ? minYAxis : pointYAxis;
+        prevYAxis = pointYAxis;
 
-        return point;
+        return new Vector3(pointXAxis, pointYAxis);
     }
 }

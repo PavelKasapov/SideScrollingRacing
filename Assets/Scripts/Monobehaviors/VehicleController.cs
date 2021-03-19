@@ -8,17 +8,19 @@ public class VehicleController : MonoBehaviour
     public VehicleStats stats;
     public WheelJoint2D frontWheel;
     public WheelJoint2D backWheel;
+
     private bool isAccelerating = false;
     private bool isBraking = false;
-
-    JointMotor2D frontMotor;
-    JointMotor2D backMotor;
-    JointMotor2D frontBreakMotor;
-    JointMotor2D backBreakMotor;
+    private JointMotor2D frontMotor;
+    private JointMotor2D backMotor;
+    private JointMotor2D frontBreakMotor;
+    private JointMotor2D backBreakMotor;
+    private GameObject _startPoint;
 
     [Inject]
     public void Construct ([Inject(Id = "startPoint")] GameObject startPoint)
     {
+        _startPoint = startPoint;
         transform.position = startPoint.transform.position;
     }
     private void Awake()
