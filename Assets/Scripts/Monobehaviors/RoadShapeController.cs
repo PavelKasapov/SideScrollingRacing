@@ -6,15 +6,8 @@ public class RoadShapeController : MonoBehaviour
 {
     private const float roadSectionWidth = 36f;
     private const float roadSectionYAxisPos = -3f;
-    private RoadManager _roadManager;
     public SpriteShapeController spriteShapeController;
     public int RoadSectionIndex { get; private set; }
-
-    [Inject]
-    public void Construct(RoadManager roadManager)
-    {
-        _roadManager = roadManager;
-    }
 
     public void Render(RoadSection roadSection) 
     {
