@@ -1,18 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class RoadSection : MonoBehaviour
+public class RoadSection
 {
-    // Start is called before the first frame update
-    void Start()
+    public int sectionIndex; 
+    public Vector3[] shapePoints;
+    public RoadSection(int index, Vector3[] points)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        sectionIndex = index;
+        shapePoints = points;
     }
 }
