@@ -4,7 +4,6 @@ using Zenject;
 public class GameInstaller : MonoInstaller
 {
     public RoadManager road;
-    public VehicleController vehicle;
     public GameStateManager gameStateManager;
     public GameObject startPoint;
 

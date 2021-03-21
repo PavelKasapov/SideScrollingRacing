@@ -11,32 +11,32 @@ public class VehicleController : MonoBehaviour
 
     private bool isAccelerating = false;
     private bool isBraking = false;
-    private JointMotor2D frontMotor;
-    private JointMotor2D backMotor;
-    private JointMotor2D frontBreakMotor;
-    private JointMotor2D backBreakMotor;
+    private JointMotor2D _frontMotor;
+    private JointMotor2D _backMotor;
+    private JointMotor2D _frontBreakMotor;
+    private JointMotor2D _backBreakMotor;
     private GameObject _startPoint;
 
     [Inject]
     public void Construct ([Inject(Id = "startPoint")] GameObject startPoint)
     {
         _startPoint = startPoint;
-        transform.position = startPoint.transform.position;
+        transform.position = _startPoint.transform.position;
     }
     private void Awake()
     {
-        frontMotor = CreateMotor(stats.maxSpeedFront, stats.maxTorqueFront);
-        backMotor = CreateMotor(stats.maxSpeedBack, stats.maxTorqueBack);
-        frontBreakMotor = CreateMotor(0f, stats.maxTorqueBreakFront);
-        backBreakMotor = CreateMotor(0f, stats.maxTorqueBreakBack);
+        _frontMotor = CreateMotor(stats.maxSpeedFront, stats.maxTorqueFront);
+        _backMotor = CreateMotor(stats.maxSpeedBack, stats.maxTorqueBack);
+        _frontBreakMotor = CreateMotor(0f, stats.maxTorqueBreakFront);
+        _backBreakMotor = CreateMotor(0f, stats.maxTorqueBreakBack);
     }
     public void Accelerate(bool accelerateInput)
     {
         isAccelerating = accelerateInput;
         if ((isAccelerating) && (!isBraking))
         {
-            frontWheel.motor = frontMotor;
-            backWheel.motor = backMotor;
+            frontWheel.motor = _frontMotor;
+            backWheel.motor = _backMotor;
             frontWheel.useMotor = true;
             backWheel.useMotor = true;
         }
@@ -56,8 +56,8 @@ public class VehicleController : MonoBehaviour
         isBraking = brakeInput;
         if ((isBraking) && (!isAccelerating))
         {
-            frontWheel.motor = frontBreakMotor;
-            backWheel.motor = backBreakMotor;
+            frontWheel.motor = _frontBreakMotor;
+            backWheel.motor = _backBreakMotor;
             frontWheel.useMotor = true;
             backWheel.useMotor = true;
         }
@@ -74,12 +74,11 @@ public class VehicleController : MonoBehaviour
 
     private JointMotor2D CreateMotor(float speed, float torque)
     {
-        JointMotor2D motor = new JointMotor2D()
+        return new JointMotor2D()
         {
             motorSpeed = -speed,
             maxMotorTorque = torque
         };
-        return motor;
     }
 }
 

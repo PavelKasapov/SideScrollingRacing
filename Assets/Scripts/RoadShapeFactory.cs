@@ -5,7 +5,7 @@ using Zenject;
 
 public class RoadShapeFactory : IFactory<RoadShapeController>
 {
-    private const string _roadShapePrefabPath = "Prefabs/Road Shape";
+    private const string RoadShapePrefabPath = "Prefabs/Road Shape";
     private DiContainer _diContainer;
     private GameObject _roadShapePrefab;
     public RoadShapeFactory(DiContainer diContainer)
@@ -16,12 +16,12 @@ public class RoadShapeFactory : IFactory<RoadShapeController>
 
     private void Load()
     {
-        _roadShapePrefab = Resources.Load(_roadShapePrefabPath, typeof(GameObject)) as GameObject;
+        _roadShapePrefab = Resources.Load(RoadShapePrefabPath, typeof(GameObject)) as GameObject;
     }
 
     public RoadShapeController Create()
     {
-        RoadShapeController newPart = _diContainer.InstantiatePrefabForComponent<RoadShapeController>(_roadShapePrefab, Vector3.zero, Quaternion.identity, null);
+        var newPart = _diContainer.InstantiatePrefabForComponent<RoadShapeController>(_roadShapePrefab, Vector3.zero, Quaternion.identity, null);
         return newPart;
     }
 }

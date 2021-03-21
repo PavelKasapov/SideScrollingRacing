@@ -20,8 +20,8 @@ public class RoadManager : MonoBehaviour
 
     public void RenderRoadSection(int sectionIndex)
     {
-        RoadShapeController shapeController = _roadShapePool.FirstOrDefault(i => i.RoadSectionIndex == sectionIndex - 3);
-        RoadSection roadSectionToRender = _road.FirstOrDefault(i => i.sectionIndex == sectionIndex);
+        var shapeController = _roadShapePool.FirstOrDefault(i => i.RoadSectionIndex == sectionIndex - 3);
+        var roadSectionToRender = _road.FirstOrDefault(i => i.sectionIndex == sectionIndex);
         if (roadSectionToRender == null)
         {
             roadSectionToRender = _generationService.GenerateSecton(sectionIndex);
@@ -35,9 +35,9 @@ public class RoadManager : MonoBehaviour
         _road.Clear();
         for (int i = -1; i < 2; i++)
         {
-            RoadSection newRoadSection = _generationService.GenerateSecton(i);
+            var newRoadSection = _generationService.GenerateSecton(i);
             _road.Add(newRoadSection);
-            RoadShapeController newRoadShape = _roadPartFactory.Create();
+            var newRoadShape = _roadPartFactory.Create();
             newRoadShape.transform.parent = transform;
             _roadShapePool.Add(newRoadShape);
             newRoadShape.Render(newRoadSection);

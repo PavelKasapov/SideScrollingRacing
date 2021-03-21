@@ -4,8 +4,8 @@ using Zenject;
 
 public class GameStateManager : MonoBehaviour
 {
-    private const float roadSectionWidth = 36f;
-    private float finishDistance = 500f;
+    private const float RoadSectionWidth = 36f;
+    private float _finishDistance = 500f;
     private VehicleController _vehicle;
     private RoadManager _roadManager;
     private Coroutine _checkPassedDistanceRoutine;
@@ -22,12 +22,12 @@ public class GameStateManager : MonoBehaviour
 
     IEnumerator CheckPassedDistanceRoutine()
     {
-        while (PassedDistance < finishDistance)
+        while (PassedDistance < _finishDistance)
         {
             PassedDistance = _vehicle.transform.position.x;
-            if (PassedDistance > (roadSectionWidth/2) + ActiveRoadSection * roadSectionWidth)
+            if (PassedDistance > (RoadSectionWidth / 2) + ActiveRoadSection * RoadSectionWidth)
             {
-                ActiveRoadSection = Mathf.RoundToInt(PassedDistance / roadSectionWidth);
+                ActiveRoadSection = Mathf.RoundToInt(PassedDistance / RoadSectionWidth);
                 _roadManager.RenderRoadSection(ActiveRoadSection + 1);
             }
             yield return null;
@@ -37,7 +37,6 @@ public class GameStateManager : MonoBehaviour
 
     public void OnNewGame()
     {
-
         _checkPassedDistanceRoutine = StartCoroutine(CheckPassedDistanceRoutine());
     }
 
