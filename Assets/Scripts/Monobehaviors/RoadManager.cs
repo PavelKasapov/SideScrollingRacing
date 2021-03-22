@@ -3,19 +3,39 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-public class RoadManager : MonoBehaviour
+public class RoadManager : MonoBehaviour, IInitializable
 {
+    private const string RoadShapePrefabPath = "Prefabs/Road Shape";
     private List<RoadShapeController> _roadShapePool = new List<RoadShapeController>();
     private List<RoadSection> _road = new List<RoadSection>();
-    private RoadShapeFactory _roadPartFactory;
-    private RoadSectionGenerationService _generationService;
+    private RoadSectionGeneratorService _generationService;
+    private NewGameService _newGameService;
 
     [Inject]
-    public void Construct(RoadShapeFactory roadShapeFactory, RoadSectionGenerationService generationService)
+    public void Construct( RoadSectionGeneratorService generationService, NewGameService newGameService)
     {
-        _roadPartFactory = roadShapeFactory;
         _generationService = generationService;
-        OnNewGame();
+        _newGameService = newGameService;
+    }
+
+    public void Initialize()
+    {
+        var roadShapePrefab = Resources.Load(RoadShapePrefabPath, typeof(GameObject)) as GameObject;
+        for (int i = 0; i < 3; i++)
+        {
+            var newRoadShape = Instantiate(roadShapePrefab, Vector3.zero, Quaternion.identity, transform).GetComponent<RoadShapeController>();
+            _roadShapePool.Add(newRoadShape);
+        }
+    }
+
+    private void OnEnable()
+    {
+        _newGameService.OnNewGame += NewGameHandler;
+    }
+
+    private void OnDisable()
+    {
+        _newGameService.OnNewGame -= NewGameHandler;
     }
 
     public void RenderRoadSection(int sectionIndex)
@@ -29,18 +49,18 @@ public class RoadManager : MonoBehaviour
         shapeController.Render(roadSectionToRender);
     }
 
-    private void OnNewGame()
+    private void NewGameHandler()
     {
-        _roadShapePool.Clear();
+        foreach(var roadShape in _roadShapePool)
+        {
+            roadShape.RoadSectionIndex = null;
+        }
         _road.Clear();
         for (int i = -1; i < 2; i++)
         {
             var newRoadSection = _generationService.GenerateSecton(i);
             _road.Add(newRoadSection);
-            var newRoadShape = _roadPartFactory.Create();
-            newRoadShape.transform.parent = transform;
-            _roadShapePool.Add(newRoadShape);
-            newRoadShape.Render(newRoadSection);
+            _roadShapePool.Find(roadShape => roadShape.RoadSectionIndex == null).Render(newRoadSection);
         }
     }
 }

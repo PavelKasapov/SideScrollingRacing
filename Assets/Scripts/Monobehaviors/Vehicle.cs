@@ -1,16 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
-public class VehicleController : MonoBehaviour
+public class Vehicle : MonoBehaviour
 {
     public VehicleStats stats;
     public WheelJoint2D frontWheel;
     public WheelJoint2D backWheel;
 
-    private bool isAccelerating = false;
-    private bool isBraking = false;
+    private bool _isAccelerating = false;
+    private bool _isBraking = false;
     private JointMotor2D _frontMotor;
     private JointMotor2D _backMotor;
     private JointMotor2D _frontBreakMotor;
@@ -21,10 +19,10 @@ public class VehicleController : MonoBehaviour
     public void Construct ([Inject(Id = "startPoint")] GameObject startPoint)
     {
         _startPoint = startPoint;
-        transform.position = _startPoint.transform.position;
     }
     private void Awake()
     {
+        transform.position = _startPoint.transform.position;
         _frontMotor = CreateMotor(stats.maxSpeedFront, stats.maxTorqueFront);
         _backMotor = CreateMotor(stats.maxSpeedBack, stats.maxTorqueBack);
         _frontBreakMotor = CreateMotor(0f, stats.maxTorqueBreakFront);
@@ -32,19 +30,19 @@ public class VehicleController : MonoBehaviour
     }
     public void Accelerate(bool accelerateInput)
     {
-        isAccelerating = accelerateInput;
-        if ((isAccelerating) && (!isBraking))
+        _isAccelerating = accelerateInput;
+        if ((_isAccelerating) && (!_isBraking))
         {
             frontWheel.motor = _frontMotor;
             backWheel.motor = _backMotor;
             frontWheel.useMotor = true;
             backWheel.useMotor = true;
         }
-        else if (!isAccelerating)
+        else if (!_isAccelerating)
         {
             frontWheel.useMotor = false;
             backWheel.useMotor = false;
-            if (isBraking)
+            if (_isBraking)
             {
                 Brake(true);
             }
@@ -53,19 +51,19 @@ public class VehicleController : MonoBehaviour
 
     public void Brake(bool brakeInput)
     {
-        isBraking = brakeInput;
-        if ((isBraking) && (!isAccelerating))
+        _isBraking = brakeInput;
+        if ((_isBraking) && (!_isAccelerating))
         {
             frontWheel.motor = _frontBreakMotor;
             backWheel.motor = _backBreakMotor;
             frontWheel.useMotor = true;
             backWheel.useMotor = true;
         }
-        else if (!isBraking)
+        else if (!_isBraking)
         {
             frontWheel.useMotor = false;
             backWheel.useMotor = false;
-            if (isAccelerating)
+            if (_isAccelerating)
             {
                 Accelerate(true);
             }
@@ -79,6 +77,10 @@ public class VehicleController : MonoBehaviour
             motorSpeed = -speed,
             maxMotorTorque = torque
         };
+    }
+
+    public class Factory : PlaceholderFactory<string, Vehicle>
+    {
     }
 }
 

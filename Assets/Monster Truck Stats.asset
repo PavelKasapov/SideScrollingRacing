@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98632ecf48e10944ca2c5f92bd7fbf9f, type: 3}
-  m_Name: Sport Car Stats
+  m_Name: Monster Truck Stats
   m_EditorClassIdentifier: 
-  vehicleName: Sport Car
-  maxSpeedFront: 0
-  maxTorqueFront: 0
-  maxTorqueBreakFront: 5
-  maxSpeedBack: 2500
-  maxTorqueBack: 500
-  maxTorqueBreakBack: 5
+  vehicleName: 
+  maxSpeedFront: 500
+  maxTorqueFront: 40
+  maxTorqueBreakFront: 20
+  maxSpeedBack: 500
+  maxTorqueBack: 40
+  maxTorqueBreakBack: 20

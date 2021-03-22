@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
     private PlayerInputActions _controls;
-    public VehicleController vehicle;
+    public Vehicle vehicle;
     private void Awake()
     {
         _controls = new PlayerInputActions();

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class RoadSectionGenerationService
+public class RoadSectionGeneratorService
 {
     private const float minYAxis = 1f;
     private const float maxYAxis = 10f;

@@ -4,13 +4,29 @@ using Zenject;
 
 public class CameraController : MonoBehaviour
 {
-    private VehicleController _vehicle;
+    private Vehicle _vehicle;
     private Coroutine _folowCarRoutine;
+    private NewGameService _newGameService;
 
     [Inject]
-    public void Construct(VehicleController vehicle)
+    public void Construct(NewGameService newGameService)
     {
-        _vehicle = vehicle;
+        _newGameService = newGameService;
+    }
+
+    private void OnEnable()
+    {
+        _newGameService.OnNewGame += NewGameHandler;
+    }
+
+    private void OnDisable()
+    {
+        _newGameService.OnNewGame -= NewGameHandler;
+    }
+
+    public void NewGameHandler()
+    {
+        _vehicle = _newGameService.Vehicle;
         if (_folowCarRoutine == null)
         {
             _folowCarRoutine = StartCoroutine(FollowCar());
